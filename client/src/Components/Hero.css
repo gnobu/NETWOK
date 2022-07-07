@@ -1,0 +1,28 @@
+
+.hero{
+    background: url(/public/back.jpg); 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;;
+    padding: 5%;
+}
+
+.hero__title{
+    background: linear-gradient(145deg, #9900cc, #21005e, #9900cc);
+    color: transparent;
+    font-size: 4rem;
+    font-weight:700;
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.hero__text {
+    font-size: 1.5rem;
+}
+
+.hero__text > a{
+    text-decoration: none;
+    color:rgb(172, 0, 172); ;
+}
