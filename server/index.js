@@ -6,8 +6,8 @@ require('dotenv').config();
 const { PORT } = process.env;
 const DB_INIT = require('./models');
 const authRoutes = require('./routes/authRoutes');
-const searchRoutes = require('./routes/searchRoutes');
-const { responseObject } = require('./controllers/helpers');
+const apiRoutes = require('./routes/apiRoutes');
+const { responseObject } = require('./controllers/responseObject');
 const cookieParser = require('cookie-parser');
 
 
@@ -27,7 +27,7 @@ DB_INIT(() => {
         res.redirect('http://localhost:3000/signin');
     })
     app.use('/auth', authRoutes);
-    app.use('/search', searchRoutes);
+    app.use('/api', apiRoutes);
 
     // Error handler
     app.use((error, req, res, next) => {

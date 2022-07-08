@@ -1,9 +1,8 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 
-const { verifyToken } = require('../controllers/helpers');
+const { verifyToken } = require('../middlewares/verifyToken');
 const { createUser, login, checkUser, fetchUser, logout } = require('../controllers/auth.controller');
-const validator = require('../controllers/validator');
+const validator = require('../middlewares/validator');
 
 // Check for user
 router.post('/', checkUser);

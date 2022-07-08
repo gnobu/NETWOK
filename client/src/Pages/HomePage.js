@@ -19,7 +19,6 @@ export default function HomePage() {
   
   useEffect(() => {
     if (!signedIn) {
-      console.log("redirect to sign in");
       return navigate('/signin')
     };
     
@@ -27,7 +26,6 @@ export default function HomePage() {
     
     if (!pathname.username) { navigate('/home') };
     const refresh = async () => {
-      console.log("get user from db", signedIn);
       const error = await dispatch(refreshUser(signedIn));
       if (error) console.log(error);
     }

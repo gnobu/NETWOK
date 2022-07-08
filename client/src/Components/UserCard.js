@@ -1,19 +1,18 @@
 import React from 'react';
 import './UserCard.css';
 
-export default function UserCard(props) {
-  const user = props.res;
+export default function UserCard({ user }) {
 
   return (
     <div className='resultCard'>
-      <div className="userPic"><img src={user.pic} alt='profile pic' /></div>
+      <div className="userPic"><img src={user.avatar} alt='profile pic' /></div>
       <div className='userInfo'>
         <div className="names">
-          <p>{user.fullname}</p>
+          <p>{user.fullName}</p>
           <span>@{user.username}</span>
         </div>
         <ul className='list-row'>
-          {user.skill.map((skill, idx) => {
+          {user.skills.map((skill, idx) => {
             return (
               <li className='skill' key={idx}>{skill}</li>
             )
@@ -21,7 +20,7 @@ export default function UserCard(props) {
         </ul>
       </div>
       <div className='action'>
-        <button className="btn">Following</button>
+        <button className="btn">Connect</button>
       </div>
     </div>
   )

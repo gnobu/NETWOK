@@ -1,5 +1,6 @@
-const sessionProfile = JSON.parse(sessionStorage.getItem('profile'));
+// const sessionProfile = JSON.parse(sessionStorage.getItem('profile'));
 const initialState = {
+    auth: false,
     _id: "",
     avatar: null,
     fullname: "Loading...",
@@ -13,7 +14,7 @@ const initialState = {
 }
 
 
-const profile = (profile = sessionProfile || initialState, action) => {
+const profile = (profile = initialState, action) => {
     switch (action.type) {
         case "profile/FETCH_PROFILE":
             return action.payload;

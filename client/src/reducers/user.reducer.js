@@ -5,27 +5,27 @@
 
 // });
 
-// const signedIn = JSON.parse(localStorage.getItem('signedIn'));
 const initialState = {
+    auth: false,
     _id: "",
     avatar: null,
-    fullname: "Loading...",
+    fullName: "Loading...",
     username: "Loading...",
-    connections: [],
-    bio: "Loading",
-    skills: [],
-    posts: [],
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    auth: false
+    timeline: []
+    // connections: [],
+    // bio: "Loading",
+    // skills: [],
+    // posts: [],
+    // createdAt: new Date(),
+    // updatedAt: new Date(),
 }
 
 const user = (user = initialState, action) => {
     switch (action.type) {
         case "user/REGISTER":
-            return action.payload;
+            return { ...user, auth: action.payload.auth, username: action.payload.username };
         case "user/LOGIN":
-            return action.payload;
+            return { ...user, auth: action.payload.auth, username: action.payload.username };
         case "user/REFRESH":
             return action.payload;
         case "user/LOGOUT":

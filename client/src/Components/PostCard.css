@@ -36,12 +36,23 @@
     font-size: .9rem;
 }
 
-.like-btn {
+.like-div {
     border: none;
+    outline: none;
     background: transparent;
 }
-.like-btn:hover {
+
+.like-btn {
+    font-size: 1.5rem;
     cursor: pointer;
+    color: #9900cc22;
+}
+.like-btn:hover {
+    color: #9900cc88;
+}
+
+.like-btn.active {
+    color: var(--color-purple);
 }
 
 .date-time {

@@ -17,10 +17,8 @@ function Login() {
   const form = useRef();
   
   useEffect(() => {
-    console.log(user);
 
     if (user.auth) {
-      console.log('redirecting to home', user.auth);
       sessionStorage.setItem('signedIn', user.username);
       navigate('/home');
     }

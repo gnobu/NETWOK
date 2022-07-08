@@ -4,7 +4,7 @@ import * as api from '../api';
 export const getProfile = (username) => async (dispatch) => {
     try {
         if (username === 'home') { username = sessionStorage.getItem('signedIn'); }
-        const { data } = await api.fetchUser(username);
+        const { data } = await api.fetchProfile(username);
         if (data.data) {
             dispatch({ type: 'profile/FETCH_PROFILE', payload: data.data });
         } else {

@@ -3,6 +3,17 @@ import * as api from '../api';
 // ACTION CREATORS
 
 
+// ATTEMPT SIGN UP
+export const attemptRegister = (registerData) => async (dispatch) => {
+    try {
+        const { data } = await api.register(registerData); // SEND TO BACKEND AND GET RESPONSE
+        dispatch({ type: 'user/REGISTER', payload: data.data }); // DISPATCH THE RESULT TO THE REDUCER
+    } catch (error) {
+        // console.log(error.response.data); // LOG ERROR TO CONSOLE
+        return error.response.data.error;
+    }
+}
+
 // ATTEMPT LOGIN
 export const attemptLogin = (loginData) => async (dispatch) => {
     try {
@@ -10,17 +21,6 @@ export const attemptLogin = (loginData) => async (dispatch) => {
         // console.log(data);
         dispatch({ type: 'user/LOGIN', payload: data.data }); // DISPATCH THE RESULT TO THE REDUCER
     } catch (error) {
-        return error.response.data.error;
-    }
-}
-
-// ATTEMPT LOGIN
-export const attemptRegister = (registerData) => async (dispatch) => {
-    try {
-        const { data } = await api.register(registerData); // SEND TO BACKEND AND GET RESPONSE
-        dispatch({ type: 'user/REGISTER', payload: data.data }); // DISPATCH THE RESULT TO THE REDUCER
-    } catch (error) {
-        // console.log(error.response.data); // LOG ERROR TO CONSOLE
         return error.response.data.error;
     }
 }

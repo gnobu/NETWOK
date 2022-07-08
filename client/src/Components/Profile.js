@@ -5,7 +5,6 @@ import './Profile.css';
 import { BsBoxArrowRight } from 'react-icons/bs';
 
 import PostCard from './PostCard';
-// import pic from '../images/tictactoe.png';
 import Connections from './Connections';
 import { getProfile } from '../actions/profile.action';
 import { attemptlogout } from '../actions/user.action';
@@ -15,30 +14,44 @@ import { attemptlogout } from '../actions/user.action';
 export default function Profile() {
   const [connectEdit, setConnectEdit] = useState('edit');
   const [showConnections, setShowConnections] = useState({ display: false, label: '', connections: [] });
+  const [posts, setPosts] = useState([]);
   const modalRef = useRef(null);
   const done = useRef(false);
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.profile);
   const { username } = useParams();
   // console.log(profile); // re-render checks
-  
+
 
   useEffect(() => {
-    console.log("get profile from db");
+    function sortPosts () {
+      let sorted = profile.posts?.reduce((prev, curr) => {
+        curr.createdAt = new Date(curr.createdAt).getTime();
+        prev.push(curr);
+
+        return prev.sort((a, b) => {
+          return (b.createdAt - a.createdAt)
+        });
+      }, [])
+      sorted && setPosts(prev => sorted)
+    }
+    return () => {sortPosts()}
+  }, [profile])
+
+  useEffect(() => {
     dispatch(getProfile(username));
   }, [dispatch, username])
 
   useEffect(() => {
     if (done.current) return;
-
     setConnectEdit(prev => prev);
-
-    done.current = true;
+    return () => done.current = true;
   }, [connectEdit])
 
   useEffect(() => {
     if (showConnections.display) modalRef.current.showModal();
   }, [showConnections])
+
 
   const viewModal = (e) => {
     // const follows = e.target.getAttribute('data-follows');
@@ -82,11 +95,11 @@ export default function Profile() {
       {showConnections.display && <Connections setShowConnections={setShowConnections} showConnections={showConnections} ref={modalRef} />}
 
       {
-        (profile.posts?.length > 0)
+        (posts.length > 0)
           ? <ul className='no-list-style'>
-            {profile.posts.map(post => {
+            {posts.map((post, idx) => {
               return (
-                <li key={post.id}><PostCard info={post} /></li>
+                <li key={idx}><PostCard info={post} /></li>
               )
             })}
           </ul>
