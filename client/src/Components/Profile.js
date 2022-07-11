@@ -54,8 +54,8 @@ export default function Profile() {
 
 
   const viewModal = (e) => {
-    // const follows = e.target.getAttribute('data-follows');
-    setShowConnections({ display: true, label: e.target.innerText, connections: profile.connections });
+    const modalType = e.target.getAttribute('data-type');
+    setShowConnections({ display: true, label: e.target.innerText, connections: profile[modalType] });
   }
 
   const logout = (e) => {
@@ -72,7 +72,8 @@ export default function Profile() {
             <h2>{profile.fullName}</h2>
             <p>@{profile.username}</p>
             <div className='connectionsDiv'>
-              <button onClick={viewModal} className='connections'>{profile.connections?.length} Connections</button>
+              <button onClick={viewModal} data-type='connections' className='connections'>{profile.connections_count} Connections</button>
+              <button onClick={viewModal} data-type='connect_requests' className='connections'>{profile.requests_count} Requests</button>
             </div>
           </div>
           <button onClick={logout} className='logoutAction'>
