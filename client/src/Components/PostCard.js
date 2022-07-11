@@ -5,7 +5,7 @@ import './PostCard.css'
 
 function PostCard({ info }) {
   const [liked, setLiked] = useState(false);
-  const [likesCount, setLikesCount] = useState(info.likes?.length);
+  const [likesCount, setLikesCount] = useState(info.likes_count);
 
   function toggleLike(e) {
     setLiked(prev => !prev);
@@ -17,7 +17,7 @@ function PostCard({ info }) {
   }
 
   function getDate(d) {
-    if (!d) return;
+    if (!d) return 'no date';
     const elapsed = Date.now() - d;
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const month = months[new Date(d).getMonth()];

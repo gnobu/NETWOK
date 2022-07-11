@@ -23,11 +23,11 @@ const Connections = forwardRef(({ setShowConnections, showConnections }, ref) =>
             <h2>{showConnections.label}</h2>
 
             <ul className="follows__list">
-                {showConnections.connections.map(item => {
+                {showConnections.connections.map((item, idx) => {
                     return (
-                        <li key={item.id} >
+                        <li key={idx} >
                             <div className="menu-list">
-                                <UserCard res={item} />
+                                <UserCard user={item} />
                             </div>
                         </li>
                     )

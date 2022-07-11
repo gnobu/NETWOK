@@ -10,11 +10,12 @@ module.exports.verifyToken = (req, res, next) => {
         console.log(err);
         res.json(this.responseObject({ auth: false }, false));
       } else {
+        req.userId = decodedToken.id;
         next();
-        // console.log(decodedToken);
       }
     })
   } else {
+    console.log('no token');
     res.json(this.responseObject({ auth: false }, false));
   }
 }

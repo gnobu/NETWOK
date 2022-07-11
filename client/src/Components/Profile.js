@@ -33,7 +33,7 @@ export default function Profile() {
           return (b.createdAt - a.createdAt)
         });
       }, [])
-      sorted && setPosts(prev => sorted)
+      sorted && setPosts(sorted);
     }
     return () => {sortPosts()}
   }, [profile])

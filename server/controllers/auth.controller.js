@@ -37,6 +37,8 @@ module.exports.createUser = async (req, res) => {
         const salt = await bcrypt.genSalt(10); // generating salt to hash password
 
         newUser.password = await bcrypt.hash(newUser.password, salt); // set password to hashed password
+        
+        newUser.markModified('connections'); // ensure connections is saved
 
         //save the user and create three posts for them
         newUser.save((err) => {
@@ -64,7 +66,7 @@ module.exports.createUser = async (req, res) => {
         });
 
         //return response
-        console.log('User Created');
+        console.log('User Created', newUser.hasOwnProperty('connections'));
         const token = createToken({ id: newUser._id, username: newUser.username });
         res.cookie('auth_token', token, { httpOnly: true, maxAge: maxAge * 1000 });
         // res.status(201).json(responseObject({ ...newUser, auth: true }, true));

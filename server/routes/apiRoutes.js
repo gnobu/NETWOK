@@ -1,14 +1,19 @@
 const router = require('express').Router();
 
-const User = require('../models/schema/user');
-const { fetchProfile, search } = require('../controllers/api.controller');
+const { connect, fetchProfile, request, search } = require('../controllers/api.controller');
 const { verifyToken } = require('../middlewares/verifyToken');
 
 // search for user
 router.post('/search', search)
 
-// fetch user data
+// fetch user profile
 router.get('/profile/:username', verifyToken, fetchProfile);
+
+// toggle request to connect with other user
+router.patch('/request_connect/:userId', verifyToken, request);
+
+// toggle connect with other user
+router.patch('/connect/:userId', verifyToken, connect);
 
 
 module.exports = router;

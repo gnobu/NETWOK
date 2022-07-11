@@ -11,7 +11,6 @@ export default function Search() {
 
   async function setValue(e) {
     const val = e.target.value.toLowerCase();
-    console.log(val, form.current.searchType.value);
     if (val.length) {
       setSearchVal(true);
       const { data } = await lookup({ content: val, filter: form.current.searchType.value });
