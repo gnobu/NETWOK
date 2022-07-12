@@ -20,7 +20,8 @@ export default function Profile() {
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.profile);
   const { username } = useParams();
-  // console.log(profile); // re-render checks
+  console.log(profile.posts); // re-render checks
+  console.log(posts); // re-render checks
 
 
   useEffect(() => {
@@ -35,7 +36,7 @@ export default function Profile() {
       }, [])
       sorted && setPosts(sorted);
     }
-    return () => {sortPosts()}
+    sortPosts();
   }, [profile])
 
   useEffect(() => {
