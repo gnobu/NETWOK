@@ -34,3 +34,8 @@
 .btn:active {
     transform: scale(0.9);
 }
+
+.content_link {
+    text-decoration: none;
+    color: inherit;
+}

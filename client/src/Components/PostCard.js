@@ -35,14 +35,14 @@ function PostCard({ info }) {
   return (
     <div className='post-card'>
       <div className="image-wrapper">
-        <Link to={`/${info.author.username}`}>
+        <Link to={`/${info.author.username}`} className='content_link'>
           <img src={info.author.avatar} alt="author's profile pic" className='profile-pic' />
         </Link>
       </div>
       <div className='post-wrapper'>
 
         <h3 className='author'>
-          <Link to={`/${info.author.username}`}>
+          <Link to={`/${info.author.username}`} className='content_link'>
             {info.author.fullName}<span>@{info.author.username}</span>
           </Link>
         </h3>
