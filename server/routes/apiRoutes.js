@@ -9,8 +9,8 @@ router.post('/search', search)
 // fetch user profile
 router.get('/profile/:username', verifyToken, fetchProfile);
 
-// toggle request to connect with other user
-router.patch('/request_connect/:userId', verifyToken, request);
+// // toggle request to connect with other user
+// router.patch('/request_connect/:userId', verifyToken, request);
 
 // toggle connect with other user
 router.patch('/connect/:userId', verifyToken, connect);

@@ -3,20 +3,38 @@ const PostMessage = require('../models/schema/postMessage');
 const { responseObject } = require('./responseObject');
 
 module.exports.fetchProfile = async (req, res) => {
+    const userId = req.userId;
     const { username } = req.params;
     try {
         User.findOne({ username: username }, async function (err, user) {
             if (err) throw new Error('User not found');
-            
-            user.connections = await user.populateConnections();
-            user.connect_requests = await user.populateRequests();
 
             const { password, email, __v, ...otherData } = user.toObject();
             const posts = await PostMessage.find({ author: otherData._id }, 'author content likes likes_count createdAt')
-            .populate('author', 'avatar username fullName');
-    
-            res.json(responseObject({ ...otherData, posts, auth: true }, true));
-            console.log("profile fetched");
+                .populate('author', 'avatar username fullName');
+
+            let action;
+            if (otherData._id.toString() === userId) {
+                action = 'Edit';
+            } else {
+                User.findById(userId, (err, user) => {
+                    if (err) throw new Error('User not found');
+                    
+                    if (user.connect_requests.hasOwnProperty(otherData._id.toString())) {
+                        action = 'Accept';
+                    } else if (user.connections.hasOwnProperty(otherData._id.toString())) {
+                        action = 'Disconnect';
+                    } else {
+                        action = 'Connect';
+                    }
+                })
+            }
+
+            otherData.connections = await user.populateConnections();
+            otherData.connect_requests = await user.populateRequests();
+
+            res.json(responseObject({ ...otherData, posts, action, auth: true }, true));
+            console.log("profile fetched", action);
         });
     } catch (error) {
         console.log(error);
@@ -43,47 +61,66 @@ module.exports.search = async (req, res) => {
     }
 }
 
-module.exports.request = async (req, res) => {
-    const userId = req.userId;
-    const otherUser = req.params.userId;
-    try {
-        User.findById(otherUser, (err, user) => {
-            if (err) throw new Error(err.message);
+// module.exports.request = async (req, res) => {
+//     const userId = req.userId;
+//     const otherUser = req.params.userId;
+//     try {
+//         User.findById(otherUser, (err, user) => {
+//             if (err) throw new Error(err.message);
 
-            const connected = user.toggleRequest(userId);
-            user.markModified('connect_requests');
-            user.save();
-            console.log(`connected: ${connected}`);
-            res.json(responseObject({ connected }, true));
-        })
-    } catch (error) {
-        console.log(error);
-        res.json(responseObject(null, false, error.message));
-    }
-}
+//             const action = user.toggleRequest(userId);
+//             user.markModified('connect_requests');
+//             user.save();
+//             console.log(`action: ${action}`);
+//             res.json(responseObject({ action }, true));
+//         })
+//     } catch (error) {
+//         console.log(error);
+//         res.json(responseObject(null, false, error.message));
+//     }
+// }
 
 module.exports.connect = async (req, res) => {
     const userId = req.userId;
     const otherUser = req.params.userId;
-    try {
-        User.findById(userId, (err, user) => {
-            if (err) throw new Error(err.message);
+    const { action } = req.body;
 
-            const connected = user.toggleConnect(otherUser);
-            user.save();
-        })
-        
-        User.findById(otherUser, (err, user) => {
-            if (err) throw new Error(err.message);
+    if (action === "connect" || action === "requested") {
+        try {
+            User.findById(otherUser, (err, user) => {
+                if (err) throw new Error(err.message);
 
-            const connected = user.toggleConnect(userId);
-            user.save();
+                const action = user.toggleRequest(userId);
+                user.markModified('connect_requests');
+                user.save();
+                console.log(`action: ${action}`);
+                res.json(responseObject({ action }, true));
+            })
+        } catch (error) {
+            console.log(error);
+            res.json(responseObject(null, false, error.message));
+        }
+    } else if (action === "connect" || action === "requested") {
+        try {
+            User.findById(userId, (err, user) => {
+                if (err) throw new Error(err.message);
 
-            console.log(`connected: ${connected}`);
-            res.json(responseObject({ connected }, true));
-        })
-    } catch (error) {
-        console.log(error);
-        res.json(responseObject(null, false, error.message));
+                const action = user.toggleConnect(otherUser);
+                user.save();
+            })
+
+            User.findById(otherUser, (err, user) => {
+                if (err) throw new Error(err.message);
+
+                const action = user.toggleConnect(userId);
+                user.save();
+
+                console.log(`action: ${action}`);
+                res.json(responseObject({ action }, true));
+            })
+        } catch (error) {
+            console.log(error);
+            res.json(responseObject(null, false, error.message));
+        }
     }
 }

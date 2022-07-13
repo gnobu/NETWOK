@@ -34,13 +34,13 @@ userSchema.method({
             if (this.requests_count === 0) { this.connect_requests.empty = true };
             delete this.connect_requests[userId];
             console.log(this.connect_requests);
-            return 'connect';
+            return 'Connect';
         } else {
             this.connect_requests[userId] = 1;
             this.requests_count += 1;
             if (this.connect_requests.empty) { delete this.connect_requests.empty };
             console.log(this.connect_requests);
-            return 'requested';
+            return 'Requested';
         }
     },
 
@@ -66,14 +66,14 @@ userSchema.method({
             delete this.connections[userId];
             this.markModified('connections');
             console.log(this.connections);
-            return 'connect';
+            return 'Connect';
         } else {
             this.connections[userId] = 1;
             this.connections_count += 1;
             if (this.connections.empty) { delete this.connections.empty };
             this.markModified('connections');
             console.log(this.connections);
-            return 'disconnect';
+            return 'Disconnect';
         }
     }
 })
