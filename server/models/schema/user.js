@@ -43,7 +43,7 @@ userSchema.method({
             return 'Requested';
         }
     },
-
+    
     populateConnections: async function () {
         if (this.connections_count === 0) return [];
         const unresolved = Object.keys(this.connections).map(async (item) => {
@@ -53,10 +53,11 @@ userSchema.method({
         const resolved = await Promise.all(unresolved);
         return resolved;
     },
-
+    
     toggleConnect: function (userId) {
         if (this.connect_requests.hasOwnProperty(userId)) {
             this.requests_count -= 1;
+            if (this.requests_count === 0) { this.connect_requests.empty = true };
             delete this.connect_requests[userId];
             this.markModified('connect_requests');
         }

@@ -14,20 +14,20 @@ module.exports.fetchProfile = async (req, res) => {
                 .populate('author', 'avatar username fullName');
 
             let action;
-            if (otherData._id.toString() === userId) {
+            const otherId = otherData._id.toString();
+            if (otherId === userId) {
                 action = 'Edit';
             } else {
-                User.findById(userId, (err, user) => {
-                    if (err) throw new Error('User not found');
-                    
-                    if (user.connect_requests.hasOwnProperty(otherData._id.toString())) {
-                        action = 'Accept';
-                    } else if (user.connections.hasOwnProperty(otherData._id.toString())) {
-                        action = 'Disconnect';
-                    } else {
-                        action = 'Connect';
-                    }
-                })
+                const currUser = await User.findById(userId, 'connections connect_requests');
+                if (!currUser) throw new Error('User not found');
+
+                if (currUser.connect_requests.hasOwnProperty(otherId)) {
+                    action = 'Accept';
+                } else if (currUser.connections.hasOwnProperty(otherId)) {
+                    action = 'Disconnect';
+                } else {
+                    action = 'Connect';
+                }
             }
 
             otherData.connections = await user.populateConnections();
