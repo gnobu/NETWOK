@@ -9,6 +9,7 @@ const initialState = {
     bio: "Loading",
     skills: [],
     posts: [],
+    action: null,
     createdAt: new Date(),
     updatedAt: new Date()
 }

@@ -91,7 +91,8 @@ export default function Profile() {
           <p className='skills'>{profile.skills}</p>
         </div>
         <div className='profileActions'>
-          <button className='btn'>{connectEdit === 'notfollowing' ? 'Follow' : connectEdit === 'following' ? 'Unfollow' : 'Edit'}</button>
+          {/* <button className='btn'>{connectEdit === 'notfollowing' ? 'Follow' : connectEdit === 'following' ? 'Unfollow' : 'Edit'}</button> */}
+          <button className='btn'>{profile.action}</button>
         </div>
       </div>
       {showConnections.display && <Connections setShowConnections={setShowConnections} showConnections={showConnections} ref={modalRef} />}
