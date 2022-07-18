@@ -1,8 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+
 import './UserCard.css';
+import { connect } from '../api';
+
 
 export default function UserCard({ user }) {
+  const [action, setAction] = useState(user.action);
+
+  async function handleConnect(e) {
+    const userId = e.target.getAttribute('data-userid');
+    const userAction = e.target.getAttribute('data-action');
+
+    const { data } = await connect(userId, userAction);
+    setAction(data.data?.action);
+  }
 
   return (
     <div className='resultCard'>
@@ -27,7 +39,7 @@ export default function UserCard({ user }) {
         </ul>
       </div>
       <div className='action'>
-        <button data-userid={user._id} className="btn">Connect</button>
+        {user.action && <button onClick={handleConnect} data-action={action} data-userid={user._id} className="btn">{action}</button>}
       </div>
     </div>
   )

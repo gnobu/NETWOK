@@ -14,3 +14,13 @@ export const getProfile = (username) => async (dispatch) => {
         console.log(error);
     }
 }
+
+// CONNECT
+export const attemptConnect = (profileId, profileAction) => async (dispatch) => {
+    const { data } = await api.connect(profileId, profileAction);
+    if (data.ok) {
+        dispatch({ type: 'profile/CONNECT', payload: data.data.action });
+    } else {
+        return data.error?.message;
+    }
+}
