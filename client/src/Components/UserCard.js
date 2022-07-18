@@ -27,7 +27,7 @@ export default function UserCard({ user }) {
         </ul>
       </div>
       <div className='action'>
-        <button data-userid={user._id} className="btn">Connect</button>
+        {user.action && <button data-userid={user._id} className="btn">{user.action}</button>}
       </div>
     </div>
   )

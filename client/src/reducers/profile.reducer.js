@@ -6,12 +6,12 @@ const initialState = {
     fullname: "Loading...",
     username: "Loading...",
     connections: [],
-    bio: "Loading",
+    bio: "Loading...",
     skills: [],
     posts: [],
     action: null,
-    createdAt: new Date(),
-    updatedAt: new Date()
+    createdAt: null,
+    updatedAt: null
 }
 
 
