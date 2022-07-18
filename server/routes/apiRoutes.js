@@ -4,7 +4,7 @@ const { connect, fetchProfile, request, search } = require('../controllers/api.c
 const { verifyToken } = require('../middlewares/verifyToken');
 
 // search for user
-router.post('/search', search)
+router.post('/search', verifyToken, search)
 
 // fetch user profile
 router.get('/profile/:username', verifyToken, fetchProfile);

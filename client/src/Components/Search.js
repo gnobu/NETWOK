@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import './Search.css';
@@ -13,6 +13,10 @@ export default function Search() {
   const form = useRef();
 
   const firstName = fullName.split(' ')[0];
+
+  useEffect(() => {
+    console.log(searchRes);
+  }, [searchRes])
 
   async function setValue(e) {
     const val = e.target.value.toLowerCase();
