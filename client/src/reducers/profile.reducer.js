@@ -19,6 +19,8 @@ const profile = (profile = initialState, action) => {
     switch (action.type) {
         case "profile/FETCH_PROFILE":
             return action.payload;
+        case "profile/CONNECT":
+            return {...profile, action: action.payload};
         default:
             return profile;
     }

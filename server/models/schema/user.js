@@ -39,22 +39,6 @@ userSchema.method({
         return related;
     },
 
-    toggleRequest: function (userId) {
-        if (this.connect_requests.hasOwnProperty(userId)) {
-            this.requests_count -= 1;
-            if (this.requests_count === 0) { this.connect_requests.empty = true };
-            delete this.connect_requests[userId];
-            console.log(this.connect_requests);
-            return 'Connect';
-        } else {
-            this.connect_requests[userId] = 1;
-            this.requests_count += 1;
-            if (this.connect_requests.empty) { delete this.connect_requests.empty };
-            console.log(this.connect_requests);
-            return 'Requested';
-        }
-    },
-
     populateConnections: async function (currUser) {
         if (this.connections_count === 0) return [];
         const unresolved = Object.keys(this.connections).map(async (item) => {
@@ -76,6 +60,24 @@ userSchema.method({
         return related;
     },
 
+    toggleRequest: function (userId) {
+        if (this.connect_requests.hasOwnProperty(userId)) {
+            this.requests_count -= 1;
+            if (this.requests_count === 0) { this.connect_requests.empty = true };
+            delete this.connect_requests[userId];
+            this.markModified('connect_requests');
+            console.log(this.connect_requests);
+            return 'Connect';
+        } else {
+            this.requests_count += 1;
+            if (this.connect_requests.empty) { delete this.connect_requests.empty };
+            this.connect_requests[userId] = 1;
+            this.markModified('connect_requests');
+            console.log(this.connect_requests);
+            return 'Requested';
+        }
+    },
+
     toggleConnect: function (userId) {
         if (this.connect_requests.hasOwnProperty(userId)) {
             this.requests_count -= 1;
@@ -91,9 +93,9 @@ userSchema.method({
             console.log(this.connections);
             return 'Connect';
         } else {
-            this.connections[userId] = 1;
             this.connections_count += 1;
             if (this.connections.empty) { delete this.connections.empty };
+            this.connections[userId] = 1;
             this.markModified('connections');
             console.log(this.connections);
             return 'Disconnect';

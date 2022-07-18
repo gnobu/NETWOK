@@ -8,19 +8,21 @@ import PostCard from './PostCard';
 import Connections from './Connections';
 import { getProfile } from '../actions/profile.action';
 import { attemptlogout } from '../actions/user.action';
+import { attemptConnect } from '../actions/profile.action';
 
 
 
 export default function Profile() {
+  const profile = useSelector((state) => state.profile);
   const [connectEdit, setConnectEdit] = useState('edit');
   const [showConnections, setShowConnections] = useState({ display: false, label: '', connections: [] });
+  const [action, setAction] = useState(profile.action);
   const [posts, setPosts] = useState([]);
   const modalRef = useRef(null);
   const done = useRef(false);
   const dispatch = useDispatch();
-  const profile = useSelector((state) => state.profile);
   const { username } = useParams();
-  // console.log(profile); // re-render checks
+  // console.log(profile.action); // re-render checks
 
 
   useEffect(() => {
@@ -36,6 +38,7 @@ export default function Profile() {
       sorted && setPosts(sorted);
     }
     sortPosts();
+    setAction(profile.action)
   }, [profile])
 
   useEffect(() => {
@@ -60,6 +63,18 @@ export default function Profile() {
 
   const logout = (e) => {
     dispatch(attemptlogout());
+  }
+
+  async function handleAction(e) {
+    const profileAction = e.target.getAttribute('data-action');
+
+    if (profileAction === 'Edit') {
+      console.log('edit');
+    } else {
+      // const { data } = await connect(profile._id, profileAction);
+      // setAction(data.data?.action);
+      dispatch(attemptConnect(profile._id, profileAction));
+    }
   }
 
 
@@ -91,7 +106,7 @@ export default function Profile() {
         </div>
         <div className='profileActions'>
           {/* <button className='btn'>{connectEdit === 'notfollowing' ? 'Follow' : connectEdit === 'following' ? 'Unfollow' : 'Edit'}</button> */}
-          <button className='btn'>{profile.action}</button>
+          <button onClick={handleAction} data-action={action} data-userid={profile._id} className='btn'>{action}</button>
         </div>
       </div>
       {showConnections.display && <Connections setShowConnections={setShowConnections} showConnections={showConnections} ref={modalRef} />}

@@ -73,38 +73,38 @@ module.exports.connect = async (req, res) => {
     const otherUser = req.params.userId;
     const { action } = req.body;
 
-    if (action === "connect" || action === "requested") {
+    if (action === "Connect" || action === "Requested") {
         try {
-            User.findById(otherUser, (err, user) => {
+            User.findById(otherUser, async (err, user) => {
                 if (err) throw new Error(err.message);
 
-                const action = user.toggleRequest(userId);
-                user.markModified('connect_requests');
-                user.save();
-                console.log(`action: ${action}`);
-                res.json(responseObject({ action }, true));
+                const newAction = user.toggleRequest(userId);
+                await user.save();
+
+                console.log(`action: ${newAction}`);
+                res.json(responseObject({ action: newAction }, true));
             })
         } catch (error) {
             console.log(error);
             res.json(responseObject(null, false, error.message));
         }
-    } else if (action === "connect" || action === "requested") {
+    } else if (action === "Accept" || action === "Disconnect") {
         try {
-            User.findById(userId, (err, user) => {
+            User.findById(otherUser, async (err, user) => {
                 if (err) throw new Error(err.message);
 
-                const action = user.toggleConnect(otherUser);
-                user.save();
+                user.toggleConnect(userId);
+                await user.save();
             })
 
-            User.findById(otherUser, (err, user) => {
+            User.findById(userId, async (err, user) => {
                 if (err) throw new Error(err.message);
 
-                const action = user.toggleConnect(userId);
-                user.save();
+                const newAction = user.toggleConnect(otherUser);
+                await user.save();
 
-                console.log(`action: ${action}`);
-                res.json(responseObject({ action }, true));
+                console.log(`action: ${newAction}`);
+                res.json(responseObject({ action: newAction }, true));
             })
         } catch (error) {
             console.log(error);

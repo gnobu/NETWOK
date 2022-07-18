@@ -22,10 +22,6 @@ DB_INIT(() => {
     app.use(cookieParser());
 
     // ROUTE HANDLERS.
-    app.get('/', (req, res, next) => {
-        console.log('redirected');
-        res.redirect('http://localhost:3000/signin');
-    })
     app.use('/auth', authRoutes);
     app.use('/api', apiRoutes);
 

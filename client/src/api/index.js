@@ -8,3 +8,4 @@ export const logout = async () => await axios.get(`auth/logout`);
 export const fetchUser = async (username) => await axios.get(`auth/${username}`);
 export const fetchProfile = async (username) => await axios.get(`api/profile/${username}`);
 export const lookup = async (payload) => await axios.post('api/search', payload);
+export const connect = async (userId, action) => await axios.patch(`api/connect/${userId}`, { action });
