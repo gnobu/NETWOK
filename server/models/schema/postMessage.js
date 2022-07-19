@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const postSchema = new Schema({
-    author: { type: Schema.Types.ObjectId, ref: 'User' },
+    author: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
     content: { type: String, required: true },
     // likes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     likes: { type: Object, default: { empty: true } },

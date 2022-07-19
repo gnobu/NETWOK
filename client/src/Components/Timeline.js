@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import "./Timeline.css";
 
@@ -9,6 +9,7 @@ export default function Timeline() {
   const [safe, setSafe] = useState('plain');
   const [charCount, setCharCount] = useState(0);
   const { avatar } = useSelector(state => state.user);
+  const form = useRef();
 
   timeline.sort((a, b) => {
     return (b.date - a.date)
@@ -28,6 +29,12 @@ export default function Timeline() {
     })
   }
 
+  function sendPost(e) {
+    e.preventDefault();
+
+    console.log(e.target);
+  }
+
 
   return (
     <div className='timeline'>
@@ -37,7 +44,7 @@ export default function Timeline() {
           <div className="image-wrapper">
             <img src={avatar} alt="author's profile pic" className='profile-pic' />
           </div>
-          <form className='post-wrapper'>
+          <form onSubmit={sendPost} ref={form} className='post-wrapper'>
             <textarea id='new__post' onChange={countChars} className='new__post' name='new__post' rows='3' maxLength={250} placeholder="Say something..."></textarea>
             <div className='post__action'>
               <span className={safe === 'safe' ? 'text-count safe' : safe === 'unsafe' ? 'text-count unsafe' : 'text-count'}>{charCount} of 250 (Max Characters)</span>
