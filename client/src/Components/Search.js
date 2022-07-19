@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import './Search.css';
@@ -13,6 +13,10 @@ export default function Search() {
   const form = useRef();
 
   const firstName = fullName.split(' ')[0];
+
+  useEffect(() => {
+    // console.log(searchRes);
+  }, [searchRes])
 
   async function setValue(e) {
     const val = e.target.value.toLowerCase();
@@ -61,64 +65,3 @@ export default function Search() {
   )
 }
 
-
-
-
-// const testData = [
-  //   {
-    //     id: 1,
-    //     fullname: "Elijah Effiong",
-    //     skill: ["web development", "data analytics"],
-    //     pic: 'https://avatars.githubusercontent.com/u/2?v=4',
-    //     username: 'Elijah'
-//   },
-//   {
-//     id: 2,
-//     fullname: "Samuel Atumah",
-//     skill: ["fullstack developer", "teacher"],
-//     pic: 'https://avatars.githubusercontent.com/u/2?v=4',
-//     username: 'SamuelAtumah1'
-//   },
-//   {
-//     id: 3,
-//     fullname: "Kingsley Akwa",
-//     skill: ["graphics design", "social media manager"],
-//     pic: 'https://avatars.githubusercontent.com/u/2?v=4',
-//     username: 'AKfour7'
-//   },
-//   {
-//     id: 4,
-//     fullname: "Edidiong Bekeh",
-//     skill: ["ui/ux design", "data analytics"],
-//     pic: 'https://avatars.githubusercontent.com/u/2?v=4',
-//     username: 'EdidiS'
-//   },
-//   {
-//     id: 11,
-//     fullname: "Elijah Effiong",
-//     skill: ["web development", "data analytics"],
-//     pic: 'https://avatars.githubusercontent.com/u/2?v=4',
-//     username: 'Elijah'
-//   },
-//   {
-//     id: 12,
-//     fullname: "Samuel Atumah",
-//     skill: ["fullstack developer", "teacher"],
-//     pic: 'https://avatars.githubusercontent.com/u/2?v=4',
-//     username: 'SamuelAtumah1'
-//   },
-//   {
-//     id: 13,
-//     fullname: "Kingsley Akwa",
-//     skill: ["graphics design", "social media manager"],
-//     pic: 'https://avatars.githubusercontent.com/u/2?v=4',
-//     username: 'AKfour7'
-//   },
-//   {
-//     id: 14,
-//     fullname: "Edidiong Bekeh",
-//     skill: ["ui/ux design", "data analytics"],
-//     pic: 'https://avatars.githubusercontent.com/u/2?v=4',
-//     username: 'EdidiS'
-//   }
-// ]

@@ -6,12 +6,12 @@ const initialState = {
     fullname: "Loading...",
     username: "Loading...",
     connections: [],
-    bio: "Loading",
+    bio: "Loading...",
     skills: [],
     posts: [],
     action: null,
-    createdAt: new Date(),
-    updatedAt: new Date()
+    createdAt: null,
+    updatedAt: null
 }
 
 
@@ -19,6 +19,8 @@ const profile = (profile = initialState, action) => {
     switch (action.type) {
         case "profile/FETCH_PROFILE":
             return action.payload;
+        case "profile/CONNECT":
+            return {...profile, action: action.payload};
         default:
             return profile;
     }
