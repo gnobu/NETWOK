@@ -1,15 +1,15 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import "./Timeline.css";
 
+import "./Timeline.css";
 import PostCard from './PostCard';
+import { makePost } from '../api';  
 import pic from '../images/tictactoe.png';
 
 export default function Timeline() {
   const [safe, setSafe] = useState('plain');
   const [charCount, setCharCount] = useState(0);
   const { avatar } = useSelector(state => state.user);
-  const form = useRef();
 
   timeline.sort((a, b) => {
     return (b.date - a.date)
@@ -29,10 +29,15 @@ export default function Timeline() {
     })
   }
 
-  function sendPost(e) {
+  async function sendPost(e) {
     e.preventDefault();
 
-    console.log(e.target);
+    const content = e.target.new__post.value;
+    const { data } = await makePost(content);
+    console.log(data.data.message);
+    e.target.new__post.value = '';
+    setCharCount(0);
+    setSafe('plain');
   }
 
 
@@ -44,7 +49,7 @@ export default function Timeline() {
           <div className="image-wrapper">
             <img src={avatar} alt="author's profile pic" className='profile-pic' />
           </div>
-          <form onSubmit={sendPost} ref={form} className='post-wrapper'>
+          <form onSubmit={sendPost} className='post-wrapper'>
             <textarea id='new__post' onChange={countChars} className='new__post' name='new__post' rows='3' maxLength={250} placeholder="Say something..."></textarea>
             <div className='post__action'>
               <span className={safe === 'safe' ? 'text-count safe' : safe === 'unsafe' ? 'text-count unsafe' : 'text-count'}>{charCount} of 250 (Max Characters)</span>
