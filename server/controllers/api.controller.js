@@ -12,26 +12,28 @@ module.exports.fetchProfile = async (req, res) => {
         User.findOne({ username: username }, async (err, user) => {
             if (err) throw new Error('User not found');
 
-            const { password, email, __v, ...otherData } = user.toObject();
-            const posts = await PostMessage.find({ author: otherData._id }, 'author content likes likes_count createdAt')
+            const { password, email, __v, ...profileData } = user.toObject();
+            const posts = await PostMessage.find({ author: profileData._id }, 'author content likes likes_count createdAt')
                 .populate('author', 'avatar username fullName');
 
-            const otherId = otherData._id.toString();
+            const otherId = profileData._id.toString();
             if (otherId === userId) {
-                otherData.action = 'Edit';
+                profileData.action = 'Edit';
+            } else if (profileData.connect_requests.hasOwnProperty(userId)) {
+                profileData.action = 'Requested';
             } else {
-                currUser.getAction(otherId, otherData);
+                currUser.getAction(otherId, profileData);
             }
 
-            otherData.connections = await user.populateConnections(currUser);
-            otherData.connect_requests = await user.populateRequests(currUser);
+            profileData.connections = await user.populateConnections(currUser);
+            profileData.connect_requests = await user.populateRequests(currUser);
 
-            res.json(responseObject({ ...otherData, posts, auth: true }, true));
+            res.json(responseObject({ ...profileData, posts, auth: true }, true));
             console.log("profile fetched");
         });
     } catch (error) {
         console.log(error);
-        res.json(responseObject(null, false, error.message));
+        res.status(400).json(responseObject({ auth: false }, false));
     }
 }
 
@@ -42,7 +44,7 @@ module.exports.search = async (req, res) => {
         if (filter === 'username') {
             const re = new RegExp(`${content}`, 'i')
             const currUser = await User.findById(userId, 'connections connect_requests');
-            User.find({ username: re }, 'avatar fullName username skills', (err, result) => {
+            User.find({ username: re }, 'avatar fullName username skills connect_requests', (err, result) => {
                 if (err) throw new Error(err.message);
 
                 const resolved = result.map((obj) => {
@@ -50,6 +52,8 @@ module.exports.search = async (req, res) => {
                     const otherId = obj._id.toString();
                     if (otherId === userId) {
                         obj.action = null;
+                    } else if (obj.connect_requests.hasOwnProperty(userId)) {
+                        obj.action = 'Requested';
                     } else {
                         currUser.getAction(otherId, obj);
                     }
