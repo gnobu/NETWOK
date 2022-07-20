@@ -21,7 +21,7 @@ userSchema.method({
     populateRequests: async function (currUser) {
         if (this.requests_count === 0) return [];
         const unresolved = Object.keys(this.connect_requests).map(async (item) => {
-            const fetched = await mongoose.model('User').findById(item, 'avatar fullName username skills');
+            const fetched = await mongoose.model('User').findById(item, 'avatar fullName username skills connect_requests');
             return fetched;
         })
         const resolved = await Promise.all(unresolved);
@@ -31,6 +31,8 @@ userSchema.method({
             const currId = currUser._id.toString();
             if (otherId === currId) {
                 obj.action = null;
+            } else if (obj.connect_requests.hasOwnProperty(currId)) {
+                obj.action = 'Requested';
             } else {
                 currUser.getAction(otherId, obj);
             }
@@ -42,7 +44,7 @@ userSchema.method({
     populateConnections: async function (currUser) {
         if (this.connections_count === 0) return [];
         const unresolved = Object.keys(this.connections).map(async (item) => {
-            const result = await mongoose.model('User').findById(item, 'avatar fullName username skills');
+            const result = await mongoose.model('User').findById(item, 'avatar fullName username skills connect_requests');
             return result;
         })
         const resolved = await Promise.all(unresolved)
@@ -52,6 +54,8 @@ userSchema.method({
             const currId = currUser._id.toString();
             if (otherId === currId) {
                 obj.action = null;
+            } else if (obj.connect_requests.hasOwnProperty(currId)) {
+                obj.action = 'Requested';
             } else {
                 currUser.getAction(otherId, obj);
             }
