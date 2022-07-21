@@ -13,8 +13,13 @@ module.exports.fetchProfile = async (req, res) => {
             if (err) throw new Error('User not found');
 
             const { password, email, __v, ...profileData } = user.toObject();
-            const posts = await PostMessage.find({ author: profileData._id }, 'author content likes likes_count createdAt')
+            let posts = await PostMessage.find({ author: profileData._id }, 'author content likes likes_count createdAt')
                 .populate('author', 'avatar username fullName');
+
+            posts = posts.map(post => {
+                post._doc.liked = post.isLiked(userId);
+                return post;
+            })
 
             const otherId = profileData._id.toString();
             if (otherId === userId) {

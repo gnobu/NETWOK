@@ -50,7 +50,7 @@ export default function Timeline() {
             <img src={avatar} alt="author's profile pic" className='profile-pic' />
           </div>
           <form onSubmit={sendPost} className='post-wrapper'>
-            <textarea id='new__post' onChange={countChars} className='new__post' name='new__post' rows='3' maxLength={250} placeholder="Say something..."></textarea>
+            <textarea id='new__post' onChange={countChars} className='new__post' name='new__post' rows='3' maxLength={250} placeholder="Say something..." required></textarea>
             <div className='post__action'>
               <span className={safe === 'safe' ? 'text-count safe' : safe === 'unsafe' ? 'text-count unsafe' : 'text-count'}>{charCount} of 250 (Max Characters)</span>
               <button type='submit' className='btn'>Post</button>
@@ -61,7 +61,7 @@ export default function Timeline() {
       <ul className='no-list-style'>
         {timeline.map(post => {
           return (
-            <li key={post.id}><PostCard info={post} /></li>
+            <li key={post.id}><PostCard post={post} /></li>
           )
         })}
       </ul>

@@ -19,19 +19,30 @@ postSchema.method({
         const resolved = await Promise.all(unresolved);
         return resolved;
     },
+
+    isLiked: function (userId) {
+        if (Object.hasOwn(this.likes, userId)) return true;
+
+        return false;
+    },
     
     toggleLike: function (userId) {
         if (Object.hasOwn(this.likes, userId)) {
-            delete this.likes[userId];
             this.likes_count -= 1;
             if (this.likes_count === 0) { this.likes.empty = true };
+            delete this.likes[userId];
+            this.markModified('likes');
+            this.save();
+            return this.isLiked(userId);
         } else {
-            this.likes[userId] = 1
             this.likes_count += 1;
             if (this.likes.empty) { delete this.likes.empty };
+            this.likes[userId] = 1;
+            this.markModified('likes');
+            this.save();
+            return this.isLiked(userId);
         }
-        return likesArray;
-    }
+    },
 })
 
 

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Search from '../Components/Search';
 import Timeline from '../Components/Timeline';
 import Profile from '../Components/Profile';
+import ErrorPage from './ErrorPage';
 import { refreshUser } from '../actions/user.action';
 import './HomePage.css';
 
@@ -45,6 +46,6 @@ export default function HomePage() {
         <Profile />
       </div >
     )
-    : <h1>Loading</h1>
+    : <ErrorPage message={'Could not load the page.'} />
 }
 

@@ -114,11 +114,9 @@ export default function Profile() {
       {
         (posts.length > 0)
           ? <ul className='no-list-style'>
-            {posts.map((post, idx) => {
-              return (
-                <li key={idx}><PostCard info={post} /></li>
-              )
-            })}
+            {posts.map(post => (
+              <li key={post._id}><PostCard post={post} /></li>
+            ))}
           </ul>
           : <p className='no-result'>No posts yet</p>
       }
