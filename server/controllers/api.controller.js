@@ -124,24 +124,38 @@ module.exports.connect = async (req, res) => {
 
 
 
+module.exports.fetchTimeline = async (req, res) => {
+    const userId = req.userId;
+    let idsArray = [userId];
+    try {
+        const { connections } = await User.findById(userId, 'connections');
+        Object.keys(connections).forEach(connection => {
+            if (connection != 'empty') {
+                idsArray.push(connection);
+            }
+        })
 
+        const resolved = await Promise.all(idsArray.map(async (person) => {
 
+            let posts = await PostMessage.find({ author: person }, 'author content likes likes_count createdAt')
+                .populate('author', 'avatar username fullName');
 
-// module.exports.request = async (req, res) => {
-//     const userId = req.userId;
-//     const otherUser = req.params.userId;
-//     try {
-//         User.findById(otherUser, (err, user) => {
-//             if (err) throw new Error(err.message);
+            posts = posts.map(post => {
+                post._doc.liked = post.isLiked(userId);
+                return post;
+            })
 
-//             const action = user.toggleRequest(userId);
-//             user.markModified('connect_requests');
-//             user.save();
-//             console.log(`action: ${action}`);
-//             res.json(responseObject({ action }, true));
-//         })
-//     } catch (error) {
-//         console.log(error);
-//         res.json(responseObject(null, false, error.message));
-//     }
-// }
+            return posts;
+        }))
+
+        const timeline = [];
+        resolved.forEach(arr => {
+            timeline.push(...arr);
+        })
+
+        res.json(responseObject({ timeline }, true));
+    } catch (error) {
+        console.log(error);
+        res.json(responseObject(null, false, error.message));
+    }
+}

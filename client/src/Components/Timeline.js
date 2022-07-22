@@ -1,20 +1,38 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import "./Timeline.css";
 import PostCard from './PostCard';
-import { makePost } from '../api';  
-import pic from '../images/tictactoe.png';
+import { makePost } from '../api';
+import { fetchTimeline } from '../actions/timeline.action';
+// import pic from '../images/tictactoe.png';
 
 export default function Timeline() {
+  const { avatar } = useSelector(state => state.user);
+  const rawTimeline = useSelector(state => state.timeline);
   const [safe, setSafe] = useState('plain');
   const [charCount, setCharCount] = useState(0);
-  const { avatar } = useSelector(state => state.user);
+  const [timeline, setTimeline] = useState([]);
+  const dispatch = useDispatch();
 
-  timeline.sort((a, b) => {
-    return (b.date - a.date)
-  })
+  useEffect(() => {
+    dispatch(fetchTimeline());
+  }, [dispatch]);
 
+  useEffect(() => {
+    function sortTimeline () {
+      let sorted = rawTimeline.reduce((prev, curr) => {
+        curr.createdAt = new Date(curr.createdAt).getTime();
+        prev.push(curr);
+
+        return prev.sort((a, b) => {
+          return (b.createdAt - a.createdAt)
+        });
+      }, [])
+      sorted && setTimeline(sorted);
+    }
+    sortTimeline();
+  }, [rawTimeline]);
 
 
   function countChars(e) {
@@ -61,7 +79,7 @@ export default function Timeline() {
       <ul className='no-list-style'>
         {timeline.map(post => {
           return (
-            <li key={post.id}><PostCard post={post} /></li>
+            <li key={post._id}><PostCard post={post} /></li>
           )
         })}
       </ul>
@@ -70,60 +88,60 @@ export default function Timeline() {
 }
 
 
-const timeline = [
-  {
-    id: 1,
-    author: {
-      fullName: 'Kirin Dave',
-      username: 'KirinDave',
-      avatar: 'https://avatars.githubusercontent.com/u/36?v=4',
-    },
-    likes: [1, 2, 3, 4, 5, 6, 7],
-    createdAt: 1654441876774,
-    content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus nemo optio dolore vitae, consequatur fugiat veniam distinctio esse, eveniet sunt consectetur error illum?'
-  },
-  {
-    id: 2,
-    author: {
-      fullName: 'John Doe',
-      username: 'JohnDoe',
-      avatar: "https://avatars.githubusercontent.com/u/2?v=4",
-    },
-    likes: [103, 7],
-    createdAt: 1653751361079,
-    content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
-  },
-  {
-    id: 3,
-    author: {
-      fullName: 'Kingsley Akwa',
-      username: 'AKfour7',
-      avatar: pic,
-    },
-    likes: [1, 2, 3, 4, 5, 6, 7, 35, 34, 23, 76, 256, 75],
-    createdAt: 1654418095445,
-    content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus nemo optio dolore vitae, consequatur fugiat veniam distinctio esse, eveniet sunt consectetur error illum? Repellat voluptatum aliquid vitae dolorum? Numquam, nihil?'
-  },
-  {
-    id: 4,
-    author: {
-      fullName: 'Kirin Dave',
-      username: 'KirinDave',
-      avatar: 'https://avatars.githubusercontent.com/u/36?v=4'
-    },
-    likes: [1, 2, 46, 7],
-    createdAt: 1651271298484,
-    content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus nemo optio dolore vitae, consequatur fugiat veniam distinctio esse.'
-  },
-  {
-    id: 5,
-    author: {
-      fullName: 'Kingsley Akwa',
-      username: 'AKfour7',
-      avatar: pic
-    },
-    likes: [1, 15, 24, 6, 37],
-    createdAt: 1654441906774,
-    content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus nemo optio dolore vitae, consequatur fugiat veniam distinctio esse, eveniet sunt consectetur error illum? Repellat voluptatum aliquid vitae dolorum? Numquam, nihil?'
-  }
-]
+// const timeline = [
+//   {
+//     id: 1,
+//     author: {
+//       fullName: 'Kirin Dave',
+//       username: 'KirinDave',
+//       avatar: 'https://avatars.githubusercontent.com/u/36?v=4',
+//     },
+//     likes: [1, 2, 3, 4, 5, 6, 7],
+//     createdAt: 1654441876774,
+//     content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus nemo optio dolore vitae, consequatur fugiat veniam distinctio esse, eveniet sunt consectetur error illum?'
+//   },
+//   {
+//     id: 2,
+//     author: {
+//       fullName: 'John Doe',
+//       username: 'JohnDoe',
+//       avatar: "https://avatars.githubusercontent.com/u/2?v=4",
+//     },
+//     likes: [103, 7],
+//     createdAt: 1653751361079,
+//     content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
+//   },
+//   {
+//     id: 3,
+//     author: {
+//       fullName: 'Kingsley Akwa',
+//       username: 'AKfour7',
+//       avatar: pic,
+//     },
+//     likes: [1, 2, 3, 4, 5, 6, 7, 35, 34, 23, 76, 256, 75],
+//     createdAt: 1654418095445,
+//     content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus nemo optio dolore vitae, consequatur fugiat veniam distinctio esse, eveniet sunt consectetur error illum? Repellat voluptatum aliquid vitae dolorum? Numquam, nihil?'
+//   },
+//   {
+//     id: 4,
+//     author: {
+//       fullName: 'Kirin Dave',
+//       username: 'KirinDave',
+//       avatar: 'https://avatars.githubusercontent.com/u/36?v=4'
+//     },
+//     likes: [1, 2, 46, 7],
+//     createdAt: 1651271298484,
+//     content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus nemo optio dolore vitae, consequatur fugiat veniam distinctio esse.'
+//   },
+//   {
+//     id: 5,
+//     author: {
+//       fullName: 'Kingsley Akwa',
+//       username: 'AKfour7',
+//       avatar: pic
+//     },
+//     likes: [1, 15, 24, 6, 37],
+//     createdAt: 1654441906774,
+//     content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus nemo optio dolore vitae, consequatur fugiat veniam distinctio esse, eveniet sunt consectetur error illum? Repellat voluptatum aliquid vitae dolorum? Numquam, nihil?'
+//   }
+// ]
