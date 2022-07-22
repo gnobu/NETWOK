@@ -7,6 +7,7 @@ const { PORT } = process.env;
 const DB_INIT = require('./models');
 const authRoutes = require('./routes/authRoutes');
 const apiRoutes = require('./routes/apiRoutes');
+const postRoutes = require('./routes/postRoutes');
 const { responseObject } = require('./controllers/responseObject');
 const cookieParser = require('cookie-parser');
 
@@ -24,6 +25,7 @@ DB_INIT(() => {
     // ROUTE HANDLERS.
     app.use('/auth', authRoutes);
     app.use('/api', apiRoutes);
+    app.use('/post', postRoutes);
 
     // Error handler
     app.use((error, req, res, next) => {
