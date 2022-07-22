@@ -2,10 +2,10 @@
 
 # dependencies
 /client/node_modules
-/server/node_modules
+node_modules
 
 # misc
-/server/.env
+.env
 
 npm-debug.log*
 yarn-debug.log*
