@@ -11,10 +11,14 @@ router.post('/create', verifyToken, (req, res) => {
 });
 
 router.patch('/like/:postId', verifyToken, (req, res) => {
-    const postId = req.params.postId;
-    const userId  = req.userId;
-
-    likePost(postId, userId, res);
+    try {
+        const postId = req.params.postId;
+        const userId  = req.userId;
+    
+        likePost(postId, userId, res);
+    } catch (error) {
+        return res.sendStatus(500);
+    }
 });
 
 module.exports = router;
