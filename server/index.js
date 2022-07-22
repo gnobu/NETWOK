@@ -10,6 +10,7 @@ const apiRoutes = require('./routes/apiRoutes');
 const postRoutes = require('./routes/postRoutes');
 const { responseObject } = require('./controllers/responseObject');
 const cookieParser = require('cookie-parser');
+const path = require('path');
 
 
 const app = express(); // INSTANCE OF SERVER.
@@ -26,6 +27,10 @@ DB_INIT(() => {
     app.use('/auth', authRoutes);
     app.use('/api', apiRoutes);
     app.use('/post', postRoutes);
+
+    // SERVE BUILD AS A STATIC FILE.
+    app.use(express.static(path.join(__dirname, "build")));
+
 
     // Error handler
     app.use((error, req, res, next) => {

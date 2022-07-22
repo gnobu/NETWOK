@@ -1,0 +1,302 @@
+[
+  {
+    "username": "mojombo",
+    "fullName": "Mo Jombo",
+    "password": "password",
+    "re_password": "password",
+    "email": "mojombo@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/1?v=4",
+    "bio": "Looking to collaborate on web dev projects and data analytics projects.",
+    "skills": ["Web dev", "data analysis"]
+  },
+  {
+    "username": "defunkt",
+    "fullName": "Derrick Funkt",
+    "password": "password",
+    "re_password": "password",
+    "email": "defunkt@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/2?v=4",
+    "bio": "I give haircuts that went to Harvard",
+    "skills": ["barbing"]
+  },
+  {
+    "username": "wayneeseguin",
+    "password": "password",
+    "re_password": "password",
+    "fullName": "Wayne Eseguin",
+    "email": "wayneeseguin@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/18?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["make-up"]
+  },
+  {
+    "username": "vanpelt",
+    "password": "password",
+    "re_password": "password",
+    "fullName": "Van Pelt",
+    "email": "vanpelt@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/17?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["tailoring"]
+  },
+  {
+    "username": "takeo",
+    "password": "password",
+    "re_password": "password",
+    "fullName": "Takeo Henry",
+    "email": "takeo@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/23?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["DevOps"]
+  },
+  {
+    "username": "caged",
+    "fullName": "Nick Cage",
+    "password": "password",
+    "re_password": "password",
+    "email": "caged@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/25?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["web dev"]
+  },
+  {
+    "username": "anotherjesse",
+    "password": "password",
+    "re_password": "password",
+    "fullName": "Jesse Jay",
+    "email": "anotherjesse@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/27?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["shooting"]
+  },
+  {
+    "username": "roland",
+    "password": "password",
+    "re_password": "password",
+    "fullName": "Roland Hill",
+    "email": "roland@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/28?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["data analysis"]
+  },
+  {
+    "username": "tomtt",
+    "password": "password",
+    "re_password": "password",
+    "fullName": "Tom Tucker",
+    "email": "tomtt@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/31?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["baking"]
+  },
+  {
+    "username": "railsjitsu",
+    "password": "password",
+    "re_password": "password",
+    "fullName": "Rails Jitsu",
+    "email": "railsjitsu@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/32?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["javascript"]
+  },
+  {
+    "username": "pjhyett",
+    "fullName": "Pj Hyett",
+    "password": "password",
+    "re_password": "password",
+    "email": "pjhyett@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/3?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["css"]
+  },
+  {
+    "username": "wycats",
+    "password": "password",
+    "re_password": "password",
+    "fullName": "Wy Cats",
+    "email": "wycats@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/4?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["web dev"]
+  },
+  {
+    "username": "ezmobius",
+    "password": "password",
+    "re_password": "password",
+    "fullName": "Ez Mobius",
+    "email": "ezmobius@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/5?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["fishing"]
+  },
+  {
+    "username": "ivey",
+    "password": "password",
+    "re_password": "password",
+    "fullName": "Ivy Stanley",
+    "email": "ivey@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/6?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["web dev"]
+  },
+  {
+    "username": "evanphx",
+    "password": "password",
+    "re_password": "password",
+    "fullName": "Evan Phoenix",
+    "email": "evanphx@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/7?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["fishing"]
+  },
+  {
+    "username": "brynary",
+    "password": "password",
+    "re_password": "password",
+    "fullName": "Bryan Ary",
+    "email": "brynary@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/19?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["fishing"]
+  },
+  {
+    "username": "kevinclark",
+    "password": "password",
+    "re_password": "password",
+    "fullName": "Kevin Clark",
+    "email": "kevinclark@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/20?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["research"]
+  },
+  {
+    "username": "technoweenie",
+    "password": "password",
+    "re_password": "password",
+    "fullName": "Techno Weenie",
+    "email": "technoweenie@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/21?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["web dev"]
+  },
+  {
+    "username": "macournoyer",
+    "password": "password",
+    "re_password": "password",
+    "fullName": "Macour Noyer",
+    "email": "macournoyer@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/22?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["fishing"]
+  },
+  {
+    "username": "topfunky",
+    "password": "password",
+    "re_password": "password",
+    "fullName": "Top Funky",
+    "email": "topfunky@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/26?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["fishing"]
+  },
+  {
+    "username": "lukas",
+    "password": "password",
+    "re_password": "password",
+    "fullName": "Lukas Leiva",
+    "email": "lukas@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/29?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["archery"]
+  },
+  {
+    "username": "fanvsfan",
+    "password": "password",
+    "re_password": "password",
+    "fullName": "Franny Van",
+    "email": "fanvsfan@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/30?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["python"]
+  },
+  {
+    "username": "nitay",
+    "password": "password",
+    "re_password": "password",
+    "fullName": "Aisha Nitay",
+    "email": "nitay@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/34?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["typescript"]
+  },
+  {
+    "username": "kevwil",
+    "password": "password",
+    "re_password": "password",
+    "fullName": "Kevin William",
+    "email": "kevwil@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/35?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["stylist"]
+  },
+  {
+    "username": "KirinDave",
+    "password": "password",
+    "re_password": "password",
+    "fullName": "Kirin Dave",
+    "email": "KirinDave@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/36?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["javascript"]
+  },
+  {
+    "username": "jamesgolick",
+    "password": "password",
+    "re_password": "password",
+    "fullName": "James Golick",
+    "email": "jamesgolick@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/37?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["html", "css"]
+  },
+  {
+    "username": "atmos",
+    "password": "password",
+    "re_password": "password",
+    "fullName": "Adam Thompson",
+    "email": "atmos@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/38?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["html", "css"]
+  },
+  {
+    "username": "errfree",
+    "password": "password",
+    "re_password": "password",
+    "fullName": "Jack Nash",
+    "email": "errfree@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/44?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["teaching"]
+  },
+  {
+    "username": "mojodna",
+    "password": "password",
+    "re_password": "password",
+    "fullName": "Molly Jodna",
+    "email": "mojodna@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/45?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["cloud computing"]
+  },
+  {
+    "username": "bmizerany",
+    "password": "password",
+    "re_password": "password",
+    "fullName": "Bella Zerany",
+    "email": "bmizerany@gmail.com",
+    "avatar": "https://avatars.githubusercontent.com/u/46?v=4",
+    "bio": "Livng my best life.",
+    "skills": ["front-end dev"]
+  }
+]
