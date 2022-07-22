@@ -27,9 +27,12 @@ DB_INIT(() => {
     app.use('/auth', authRoutes);
     app.use('/api', apiRoutes);
     app.use('/post', postRoutes);
-
+    
     // SERVE BUILD AS A STATIC FILE.
     app.use(express.static(path.join(__dirname, "build")));
+    app.get('/*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'build', 'index.html'));
+    })
 
 
     // Error handler
