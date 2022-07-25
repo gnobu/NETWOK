@@ -21,6 +21,7 @@ Netwok is a MERN stack social media web app that allows a user to do the followi
 
 
 ## How It Should be Used
+It was not built to be used by the public. It is simply for learning purposes.
 
 ## Tools Used
 ### Front-End:
