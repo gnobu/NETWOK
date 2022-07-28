@@ -23,6 +23,21 @@ const createToken = (payload) => {
 
 
 
+module.exports.checkUser = async (req, res) => {
+    const { username } = req.body;
+    try {
+        const found = await getUserByUsername(username);
+        if (found) {
+            res.json(responseObject({ found: Boolean(found), message: "Enter your password to login." }, true));
+        } else {
+            res.json(responseObject({ found: Boolean(found), message: "Username not found. Please sign up." }, true));
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(400).json(responseObject(null, false, error.message));
+    }
+}
+
 module.exports.createUser = async (req, res) => {
     const data = req.body;
     try {
@@ -37,7 +52,7 @@ module.exports.createUser = async (req, res) => {
         const salt = await bcrypt.genSalt(10); // generating salt to hash password
 
         newUser.password = await bcrypt.hash(newUser.password, salt); // set password to hashed password
-        
+
         newUser.markModified('connections'); // ensure connections is saved
 
         //save the user and create three posts for them
@@ -54,14 +69,14 @@ module.exports.createUser = async (req, res) => {
                 author: newUser._id,
                 content: `Looking for collaborators on a project. message me if interested.`
             });
-            setTimeout(() => post2.save(), 1000*60);
-            
-            
+            setTimeout(() => post2.save(), 1000 * 60);
+
+
             const post3 = new PostMessage({
                 author: newUser._id,
                 content: `Bagged my first job today. Congrats to me!`
             });
-            setTimeout(() => post3.save(), 1000*60*3);
+            setTimeout(() => post3.save(), 1000 * 60 * 3);
 
         });
 
@@ -87,7 +102,7 @@ module.exports.login = async (req, res) => {
 
         if (!validPassword) {
             console.log('incorrect password');
-            return res.status(400).json(responseObject(null, false, 'incorrect password'));
+            return res.json(responseObject(null, false, { password: 'incorrect password' }));
         }
         console.log('Login successful');
         const token = createToken({ id: otherData._id, username: otherData.username });
@@ -106,17 +121,6 @@ module.exports.logout = async (req, res) => {
     res.json(responseObject({ auth: false }, true));
 }
 
-module.exports.checkUser = async (req, res) => {
-    const { username } = req.body;
-    try {
-        const found = await getUserByUsername(username);
-        res.json(responseObject({ found: Boolean(found) }, true));
-    } catch (error) {
-        console.log(error);
-        res.status(400).json(responseObject(null, false, error.message));
-    }
-}
-
 module.exports.fetchUser = async (req, res) => {
     const { username } = req.params;
     try {
@@ -130,12 +134,3 @@ module.exports.fetchUser = async (req, res) => {
         res.json(responseObject(null, false, error.message));
     }
 }
-
-
-// module.exports = {
-//     createUser,
-//     login,
-//     logout,
-//     checkUser,
-//     fetchUser
-// }

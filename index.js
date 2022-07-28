@@ -30,6 +30,8 @@ DB_INIT(() => {
     
     // SERVE BUILD AS A STATIC FILE.
     app.use(express.static(path.join(__dirname, "build")));
+    
+    // LET REACT HANDLE UNKNOWN ROUTES.
     app.get('/*', (req, res) => {
         res.sendFile(path.join(__dirname, 'build', 'index.html'));
     })
@@ -37,7 +39,7 @@ DB_INIT(() => {
 
     // Error handler
     app.use((error, req, res, next) => {
-        console.log("INDEX ERROR HANDLER");
+        console.log("INDEX ERROR HANDLER", error);
         res.json(responseObject(null, false, error?.message));
     });
 
