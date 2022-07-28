@@ -7,10 +7,10 @@ import { connect } from '../api';
 
 export default function UserCard({ user }) {
   const [action, setAction] = useState(user.action);
-
+  
   useEffect(() => {
-    console.log(action);
-  }, [action])
+    setAction(user.action);
+  }, [user]);
 
   async function handleConnect(e) {
     const userId = e.target.getAttribute('data-userid');
@@ -24,7 +24,7 @@ export default function UserCard({ user }) {
     <div className='resultCard'>
       <div className="userPic">
         <Link to={`/${user.username}`} className='content_link'>
-          <img src={user.avatar} alt='profile pic' />
+          <img src={user.avatar || '/no-avatar.png'} alt='profile pic' />
         </Link>
       </div>
       <div className='userInfo'>
@@ -43,7 +43,7 @@ export default function UserCard({ user }) {
         </ul>
       </div>
       <div className='action'>
-        {user.action && <button onClick={handleConnect} data-action={user.action} data-userid={user._id} className="btn">{user.action}</button>}
+        {user.action && <button onClick={handleConnect} data-action={action} data-userid={user._id} className="btn">{action}</button>}
       </div>
     </div>
   )

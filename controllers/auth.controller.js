@@ -4,8 +4,8 @@ const { TOKEN_SECRET } = process.env;
 
 const User = require('../models/schema/user');
 const PostMessage = require('../models/schema/postMessage');
-const { responseObject } = require('./responseObject');
-
+const { responseObject } = require('../helpers/responseObject');
+const eventEmitter = require('../helpers/eventEmitter');
 
 
 
@@ -33,8 +33,10 @@ module.exports.checkUser = async (req, res) => {
             res.json(responseObject({ found: Boolean(found), message: "Username not found. Please sign up." }, true));
         }
     } catch (error) {
+        // res.status(400).json(responseObject(null, false, error.message));
         console.log(error);
-        res.status(400).json(responseObject(null, false, error.message));
+        res.status(500);
+        eventEmitter.emit('error-log', error.message);
     }
 }
 
@@ -81,14 +83,14 @@ module.exports.createUser = async (req, res) => {
         });
 
         //return response
-        console.log('User Created', newUser.hasOwnProperty('connections'));
         const token = createToken({ id: newUser._id, username: newUser.username });
         res.cookie('auth_token', token, { httpOnly: true, maxAge: maxAge * 1000 });
-        // res.status(201).json(responseObject({ ...newUser, auth: true }, true));
         res.status(201).json(responseObject({ auth: true, username: newUser.username }, true));
     } catch (error) {
+        // res.status(400).json(responseObject(null, false, error.message));
         console.log(error);
-        res.status(400).json(responseObject(null, false, error.message));
+        res.status(500);
+        eventEmitter.emit('error-log', error.message);
     }
 }
 
@@ -101,22 +103,20 @@ module.exports.login = async (req, res) => {
         const validPassword = await bcrypt.compare(password, dbPassword);
 
         if (!validPassword) {
-            console.log('incorrect password');
             return res.json(responseObject(null, false, { password: 'incorrect password' }));
         }
-        console.log('Login successful');
         const token = createToken({ id: otherData._id, username: otherData.username });
         res.cookie('auth_token', token, { httpOnly: true, maxAge: maxAge * 1000 });
-        // res.status(200).json(responseObject({ ...otherData, auth: true }, true));
         res.status(200).json(responseObject({ auth: true, username }, true));
     } catch (error) {
+        // res.status(400).json(responseObject(null, false, error.message));
         console.log(error);
-        res.status(400).json(responseObject(null, false, error.message));
+        res.status(500);
+        eventEmitter.emit('error-log', error.message);
     }
 }
 
 module.exports.logout = async (req, res) => {
-    console.log('logout sucessful');
     res.cookie('auth_token', '', { httpOnly: true, maxAge: 10 });
     res.json(responseObject({ auth: false }, true));
 }
@@ -125,12 +125,11 @@ module.exports.fetchUser = async (req, res) => {
     const { username } = req.params;
     try {
         const data = await User.findOne({ username }, '_id username fullName avatar');
-        if (!data) throw new Error('User not found');
-        // const { password, email, ...otherData } = data.toObject();
-        console.log("user fetched");
+        if (!data) return res.json(responseObject(null, false, 'User not found'));
         res.json(responseObject({ ...data.toObject(), auth: true }, true));
     } catch (error) {
         console.log(error);
-        res.json(responseObject(null, false, error.message));
+        res.status(500);
+        eventEmitter.emit('error-log', error.message);
     }
 }

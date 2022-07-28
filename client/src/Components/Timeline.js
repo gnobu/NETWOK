@@ -5,7 +5,6 @@ import "./Timeline.css";
 import PostCard from './PostCard';
 import { makePost } from '../api';
 import { fetchTimeline } from '../actions/timeline.action';
-// import pic from '../images/tictactoe.png';
 
 export default function Timeline() {
   const { avatar } = useSelector(state => state.user);
@@ -65,7 +64,7 @@ export default function Timeline() {
         <h2 className='section__title'>Timeline</h2>
         <div className='new-post'>
           <div className="image-wrapper">
-            <img src={avatar} alt="author's profile pic" className='profile-pic' />
+            <img src={avatar || '/no-avatar.png'} alt="author's profile pic" className='profile-pic' />
           </div>
           <form onSubmit={sendPost} className='post-wrapper'>
             <textarea id='new__post' onChange={countChars} className='new__post' name='new__post' rows='3' maxLength={250} placeholder="Say something..." required></textarea>

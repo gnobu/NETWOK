@@ -1,4 +1,5 @@
 // const sessionProfile = JSON.parse(sessionStorage.getItem('profile'));
+
 const initialState = {
     auth: false,
     _id: "",

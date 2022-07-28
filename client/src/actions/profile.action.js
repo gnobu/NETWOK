@@ -5,13 +5,11 @@ export const getProfile = (username) => async (dispatch) => {
     try {
         if (username === 'home') { username = sessionStorage.getItem('signedIn'); }
         const { data } = await api.fetchProfile(username);
-        if (data.data) {
-            dispatch({ type: 'profile/FETCH_PROFILE', payload: data.data });
-        } else {
-            alert(data.error);
-        }
-    } catch (error) {
-        console.log(error);
+        if (!data.ok) throw new Error(data.error);
+
+        dispatch({ type: 'profile/FETCH_PROFILE', payload: data.data });
+    } catch ({ response }) {
+        return response.data.error;
     }
 }
 

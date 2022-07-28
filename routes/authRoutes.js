@@ -3,7 +3,8 @@ const router = require('express').Router();
 const { verifyToken } = require('../middlewares/verifyToken');
 const { createUser, login, checkUser, fetchUser, logout } = require('../controllers/auth.controller');
 const validator = require('../middlewares/validator');
-const { responseObject } = require('../controllers/responseObject');
+const { responseObject } = require('../helpers/responseObject');
+const eventEmitter = require('../helpers/eventEmitter');
 
 // Check for user
 router.post('/', checkUser);
@@ -29,10 +30,10 @@ router.use((error, req, res, next) => {
                 ? msgs[err.path[0]] = 'Must match password'
                 : msgs[err.path[0]] = err.message;
         });
-        console.log(msgs);
         res.json(responseObject(null, false, msgs));
     } else {
         console.log("AUTH ERROR HANDLER", error);
+        eventEmitter.emit('error-log', error.message);
         // res.json(responseObject(null, false, error.details));
     }
 });

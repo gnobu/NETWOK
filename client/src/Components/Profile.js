@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './Profile.css';
 import { BsBoxArrowRight } from 'react-icons/bs';
 
@@ -22,11 +22,12 @@ export default function Profile() {
   const done = useRef(false);
   const dispatch = useDispatch();
   const { username } = useParams();
+  const navigate = useNavigate();
   // console.log(profile.action); // re-render checks
 
 
   useEffect(() => {
-    function sortPosts () {
+    function sortPosts() {
       let sorted = profile.posts?.reduce((prev, curr) => {
         curr.createdAt = new Date(curr.createdAt).getTime();
         prev.push(curr);
@@ -42,7 +43,14 @@ export default function Profile() {
   }, [profile])
 
   useEffect(() => {
-    dispatch(getProfile(username));
+    async function getProf() {
+      const error = await dispatch(getProfile(username));
+      if (error) {
+        alert(error);
+        navigate(-1);
+      }
+    }
+    getProf();
   }, [dispatch, username])
 
   useEffect(() => {
@@ -82,7 +90,7 @@ export default function Profile() {
     <div className="profileSection">
       <div className='sticky-top profile'>
         <div className="intro">
-          <div className="profileWrapper"><img className='profilePic' src={profile.avatar} alt="user's profile" /></div>
+          <div className="profileWrapper"><img className='profilePic' src={profile.avatar || '/no-avatar.png'} alt="user's profile" /></div>
           <div className="handle">
             <h2>{profile.fullName}</h2>
             <p>@{profile.username}</p>

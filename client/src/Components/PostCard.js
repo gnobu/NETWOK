@@ -28,7 +28,7 @@ function PostCard({ post }) {
     <div className='post-card'>
       <div className="image-wrapper">
         <Link to={`/${post.author.username}`} className='content_link'>
-          <img src={post.author.avatar} alt="author's profile pic" className='profile-pic' />
+          <img src={post.author.avatar || '/no-avatar.png'} alt="author's profile pic" className='profile-pic' />
         </Link>
       </div>
       <div className='post-wrapper'>
